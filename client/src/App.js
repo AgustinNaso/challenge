@@ -24,7 +24,6 @@ function App() {
     await axios.get("http://localhost:8080/categories")
       .then(response => {
         setCategories(response.data)
-        console.log(response.data)
       });
   }
 
@@ -67,6 +66,7 @@ function App() {
   }, [categories])
 
   useEffect(() => {
+    if(chosenProduct)
       getBrands(chosenProduct);
   }, [chosenProduct])
 
@@ -85,14 +85,13 @@ function App() {
     }
     axios.get("http://localhost:8080/sells", { params : params})
       .then(res => {
-        console.log(res.data);
-        console.log(params)
         chartComponent.current.chart.update({ series: { data:res.data } })
       })
   }
 
   useEffect( () => {
-    updateData();
+    if(chosenBrand)
+      updateData();
   }, [chosenBrand])
 
   let options = {
@@ -113,7 +112,6 @@ function App() {
     },
     series: [{
       type: 'column',
-      data: [29.9, 71.5, 106.4, 129.2],
       showInLegend: false
     }]
   }
@@ -126,7 +124,7 @@ function App() {
           <p style={{ marginRight: '5px' }}>Categoria: </p>
           <select name="category-select" onChange={(e) => setChosenCategory(e.target.value)}>
             {categories && categories.map((element, index) => {
-              return (<option value={element}>{element}</option>)
+              return (<option key={index} value={element}>{element}</option>)
             })
             }
           </select>
@@ -135,7 +133,7 @@ function App() {
           <p style={{ marginRight: '5px' }}>Producto: </p>
           <select name="product-select" ref={productSelect} onChange={ (e) => setChosenProduct(e.target.value)}>
             {products && products.map((element, index) => {
-              return (<option value={element}>{element}</option>)
+              return (<option  key={index} value={element}>{element}</option>)
             })
             }
           </select>
@@ -144,7 +142,7 @@ function App() {
           <p style={{ marginRight: '5px' }}>Marca: </p>
           <select name="brand-select" ref={brandSelect} onChange={(e) => setChosenBrand(e.target.value)}>
             {brands && brands.map((element, index) => {
-              return (<option value={element}>{element}</option>)
+              return (<option  key={index} value={element}>{element}</option>)
             })
             }
           </select>

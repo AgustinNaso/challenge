@@ -8,7 +8,7 @@ export class BrandsService {
                 brands : ["Adidas", "Nike"]
             },
             Sneakers : {
-                brands : ["Adidas", "Nike", "Asics"]
+                brands : ["Puma", "Nike", "Asics"]
             },
             Computers : {
                 brands : ["HP", "Apple", "Asus"]

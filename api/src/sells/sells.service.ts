@@ -45,7 +45,7 @@ export class SellsService {
                     },
                     Sneakers: {
                         brands:{
-                            Adidas : {
+                            Puma : {
                                 sells : [221, 201, 211, 210.9]
                             },
                             Nike : {
@@ -61,6 +61,8 @@ export class SellsService {
         }
     }
     getSells(category: string, product: string, brand: string) {
-        return this.data.categories[category].products[product].brands[brand].sells;
+        if(category && product && brand)
+            return this.data.categories[category].products[product].brands[brand].sells;
+        return [];
     }
 }
