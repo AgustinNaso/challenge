@@ -32,7 +32,6 @@ function App() {
     await axios.get("http://localhost:8080/products", { params: { category: category } })
       .then(response => {
         setProducts(response.data)
-        console.log(response.data)
       });
   }
 
@@ -40,7 +39,6 @@ function App() {
     await axios.get("http://localhost:8080/brands", { params: { product: product } })
       .then(response => {
         setBrands(response.data)
-        console.log(response.data)
       });
   }
 
@@ -62,12 +60,15 @@ function App() {
       }
   }, [products])
 
+  useEffect(()=> {
+    if(categories){
+      setChosenCategory(categories[0])
+      }
+  }, [categories])
+
   useEffect(() => {
-    if (products) {
-      let product = chosenProduct ? chosenProduct : products[0]
-      getBrands(product);
-    }
-  }, [products, chosenProduct])
+      getBrands(chosenProduct);
+  }, [chosenProduct])
 
   useEffect(()=>{
     if(brands){
@@ -84,7 +85,8 @@ function App() {
     }
     axios.get("http://localhost:8080/sells", { params : params})
       .then(res => {
-        console.log(params);
+        console.log(res.data);
+        console.log(params)
         chartComponent.current.chart.update({ series: { data:res.data } })
       })
   }
